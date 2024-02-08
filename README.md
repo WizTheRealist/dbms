@@ -1,1 +1,1 @@
-django database management prroject.
+django database management project.
