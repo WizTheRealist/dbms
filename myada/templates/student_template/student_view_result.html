@@ -1,0 +1,61 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+
+                <div class="container-fluid">
+                    <!-- Add a button or link to trigger the spreadsheet generation -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <a href="{% url 'create_spreadsheets' %}" class="btn btn-primary">Generate Excel Spreadsheets</a>
+                        </div>
+                    </div>
+       
+                <!-- /.card -->
+<div class="card card-primary">
+    <div class="card-header"><h3 class="card-title">{{page_title}}</h3>
+    </div>
+   <div class="table p-2">
+
+       <table class="table table-bordered">
+        {% for result in results %}
+            <tr>
+                <th colspan="5">Mat Number: {{ result.mat_number }}</th>  <!-- Display mat_number once with colspan -->
+            </tr>
+        {% endfor %}
+           <tr>
+               <th>ID</th>
+               <th>Course</th>
+               <th>Test</th>
+               <th>Exam</th>
+               <th>Total</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ result.course }}</td>
+            <td>{{ result.test }}</td>
+            <td>{{ result.exam }}</td>
+            <td>{{ result.test|add:result.exam }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <!-- Assuming the 'View Spreadsheet' button should be placed at the end of the table -->
+                <td colspan="6"></td> <!-- Use colspan to span the entire row, adjust the number based on your table structure -->
+                <td><a href="{% url 'open_spreadsheet' %}" class="btn btn-info">View Spreadsheet</a></td>
+            </tr>
+        </table>
+    </div>
+    </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
